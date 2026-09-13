@@ -1,0 +1,108 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__386906547<Principal, UserRole__91647283>
+  };
+type Data__265875254<K, V> = {var count : Nat__58649523; kvs : [var ?(K, V)]};
+type Internal__161573640<K, V> =
+  {children : [var ?Node__430031793<K, V>]; data : Data__265875254<K, V>};
+type Leaf__1045638083<K, V> = {data : Data__265875254<K, V>};
+type ListingStatus__133989481 = {#active; #sold};
+type ListingStatus__992681670 = {#active; #sold};
+type Listing__240833709 =
+  {
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    images : [Text];
+    platform : Platform__200222406;
+    prestige : Nat;
+    price : Nat;
+    rank : Text;
+    seller : Principal;
+    stats : Stats__1020437300;
+    status : ListingStatus__133989481;
+    title : Text
+  };
+type Listing__586492564 =
+  {
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    images : [Text];
+    platform : Platform__54622392;
+    prestige : Nat;
+    price : Nat;
+    rank : Text;
+    seller : Principal;
+    stats : Stats__477419846;
+    status : ListingStatus__992681670;
+    title : Text
+  };
+type Map__13625999<K, V> =
+  {var root : Node__430031793<K, V>; var size : Nat__58649523};
+type Map__386906547<K, V> = Map__670138087<K, V>;
+type Map__670138087<K, V> = Map__13625999<K, V>;
+type Nat__58649523 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__756013677 =
+  {
+    accessControlState : AccessControlState__201339279;
+    listings : Map__386906547<Nat, Listing__240833709>;
+    orders : Map__386906547<Nat, Order__866666627>;
+    state : {var nextListingId : Nat; var nextOrderId : Nat}
+  };
+type Node__430031793<K, V> =
+  {#internal : Internal__161573640<K, V>; #leaf : Leaf__1045638083<K, V>};
+type OldActor__1007934830 = {};
+type OrderStatus__352169100 = {#completed; #placed};
+type OrderStatus__641027037 = {#completed; #placed};
+type Order__308187248 =
+  {
+    buyer : Principal;
+    createdAt : Int;
+    id : Nat;
+    listingId : Nat;
+    platform : Platform__54622392;
+    price : Nat;
+    seller : Principal;
+    status : OrderStatus__352169100
+  };
+type Order__866666627 =
+  {
+    buyer : Principal;
+    createdAt : Int;
+    id : Nat;
+    listingId : Nat;
+    platform : Platform__200222406;
+    price : Nat;
+    seller : Principal;
+    status : OrderStatus__641027037
+  };
+type Platform__200222406 = {#pc; #playstation; #xbox};
+type Platform__54622392 = {#pc; #playstation; #xbox};
+type Stats__1020437300 = {kdRatio : Float; level : Nat; wins : Nat};
+type Stats__477419846 = {kdRatio : Float; level : Nat; wins : Nat};
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "20260913_000000" : (_old : OldActor__1007934830) -> NewActor__756013677
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__386906547<Principal, UserRole__91647283>
+    };
+  stable listings :
+    {
+      var root : Node__430031793<Nat, Listing__586492564>;
+      var size : Nat__58649523
+    };
+  stable orders :
+    {
+      var root : Node__430031793<Nat, Order__308187248>;
+      var size : Nat__58649523
+    };
+  stable state : {var nextListingId : Nat; var nextOrderId : Nat}
+};

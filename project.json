@@ -1,0 +1,17 @@
+{
+  "overview": "A marketplace where users browse, list, and buy Call of Duty game accounts.",
+  "features": [
+    "Browse Call of Duty account listings with rank, stats, and price",
+    "Search and filter listings by platform, price, and rank",
+    "Sellers create, edit, and remove their own listings",
+    "Buyers place orders and track order history",
+    "Sign in with Internet Identity to list and buy accounts"
+  ],
+  "category": "marketplace",
+  "tags": [
+    "gaming",
+    "marketplace",
+    "call-of-duty"
+  ],
+  "last_updated": "2026-09-13T01:06:19.434Z"
+}

@@ -1,0 +1,124 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Stats = 
+ record {
+   kdRatio: float64;
+   level: nat;
+   wins: nat;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type Platform = 
+ variant {
+   pc;
+   playstation;
+   xbox;
+ };
+type OrderStatus = 
+ variant {
+   completed;
+   placed;
+ };
+type Order = 
+ record {
+   buyer: principal;
+   createdAt: int;
+   id: nat;
+   listingId: nat;
+   platform: Platform;
+   price: nat;
+   seller: principal;
+   status: OrderStatus;
+ };
+type ListingStatus = 
+ variant {
+   active;
+   sold;
+ };
+type Listing = 
+ record {
+   createdAt: int;
+   description: text;
+   id: nat;
+   images: vec text;
+   platform: Platform;
+   prestige: nat;
+   price: nat;
+   rank: text;
+   seller: principal;
+   stats: Stats;
+   status: ListingStatus;
+   title: text;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  completeOrder: (orderId: nat) -> (opt Order);
+  createListing: (title: text, description: text, platform: Platform, rank:
+   text, prestige: nat, stats: Stats, price: nat, images: vec text) ->
+   (Listing);
+  execute: (qJson: text) -> (Result) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getListing: (listingId: nat) -> (opt Listing) query;
+  getOrder: (orderId: nat) -> (opt Order) query;
+  isCallerAdmin: () -> (bool) query;
+  listActiveListings: () -> (vec Listing) query;
+  listBuyerOrders: () -> (vec Order) query;
+  listSellerOrders: () -> (vec Order) query;
+  placeOrder: (listingId: nat) -> (opt Order);
+  removeListing: (listingId: nat) -> (bool);
+  schema: () -> (text) query;
+  updateListing: (listingId: nat, title: text, description: text, platform:
+   Platform, rank: text, prestige: nat, stats: Stats, price: nat, images:
+   vec text) -> (opt Listing);
+}
